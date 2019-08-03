@@ -1,0 +1,28 @@
+{
+  "name": "MetaShipRU/MetaShipPHPSDK",
+  "keywords": [
+    "MetaShip",
+    "sdk",
+    "delivery"
+  ],
+  "homepage": "https://metaship.ru",
+  "description": "MetaShip API SDK (metaship.ru)",
+  "type": "library",
+  "license": "MIT",
+  "require": {
+    "php": ">=7.2",
+    "guzzlehttp/guzzle": "^6.3",
+    "jms/serializer": "^3.1",
+    "doctrine/annotations": "^1.6"
+  },
+  "autoload": {
+    "psr-4": {
+      "MetaShipRU\\MetaShipPHPSDK\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Tests\\": "tests/"
+    }
+  }
+}
