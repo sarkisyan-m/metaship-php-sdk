@@ -5,7 +5,7 @@
 > Минимальные требования — PHP 7.2+.
 
 ```bash
-composer require MetaShipRU/MetaShipPHPSDK
+composer require metaship-ru/metaship-php-sdk
 ```
 
 ### Использование

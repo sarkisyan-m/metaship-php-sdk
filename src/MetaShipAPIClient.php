@@ -5,6 +5,7 @@ namespace MetaShipRU\MetaShipPHPSDK;
 use GuzzleHttp\Client;
 use JMS\Serializer\Serializer;
 use JMS\Serializer\SerializerBuilder;
+use MetaShipRU\MetaShipPHPSDK\Request\Documents\GetLabelRequest;
 use MetaShipRU\MetaShipPHPSDK\Request\Offer\OfferRequest;
 use MetaShipRU\MetaShipPHPSDK\Request\Order\CreateOrderRequest;
 use Psr\Http\Message\ResponseInterface;
@@ -47,7 +48,7 @@ class MetaShipAPIClient
 
     public function __construct(string $url, string $apiKey, string $apiSecret, array $options = [])
     {
-        $this->client = new Client(['base_uri' => $url]);
+        $this->client = new Client(array_merge(['base_uri' => $url], $options));
         $this->url = $url;
         $this->apiKey = $apiKey;
         $this->apiSecret = $apiSecret;
@@ -76,6 +77,16 @@ class MetaShipAPIClient
             [
                 'body' => $body,
                 'headers' => $this->getHeaders($createOrderRequest->getMethod(), $createOrderRequest->getPath(), $body)
+            ]);
+    }
+
+    public function getLabel(GetLabelRequest $getLabelRequest): ResponseInterface
+    {
+        $path = $getLabelRequest->getPath() . '/' . $getLabelRequest->id . '/labels';
+        return $this->client->request($getLabelRequest->getMethod(),
+            $path,
+            [
+                'headers' => $this->getHeaders($getLabelRequest->getMethod(), $path),
             ]);
     }
 
