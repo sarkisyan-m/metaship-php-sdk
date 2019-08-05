@@ -8,6 +8,7 @@ use JMS\Serializer\SerializerBuilder;
 use MetaShipRU\MetaShipPHPSDK\Request\Documents\GetLabelRequest;
 use MetaShipRU\MetaShipPHPSDK\Request\Offer\OfferRequest;
 use MetaShipRU\MetaShipPHPSDK\Request\Order\CreateOrderRequest;
+use MetaShipRU\MetaShipPHPSDK\Request\Order\GetOrdersRequest;
 use Psr\Http\Message\ResponseInterface;
 
 /**
@@ -77,6 +78,15 @@ class MetaShipAPIClient
             [
                 'body' => $body,
                 'headers' => $this->getHeaders($createOrderRequest->getMethod(), $createOrderRequest->getPath(), $body)
+            ]);
+    }
+
+    public function getOrders(GetOrdersRequest $getOrdersRequest): ResponseInterface
+    {
+        return $this->client->request($getOrdersRequest->getMethod(),
+            $getOrdersRequest->getPath(),
+            [
+                'headers' => $this->getHeaders($getOrdersRequest->getMethod(), $getOrdersRequest->getPath()),
             ]);
     }
 
