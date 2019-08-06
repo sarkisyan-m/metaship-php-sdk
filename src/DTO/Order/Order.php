@@ -33,6 +33,39 @@ class Order
     public $shopNumber;
 
     /**
+     * @Serializer\Type("string")
+     * @Serializer\SerializedName("deliveryType")
+     * @var string
+     */
+    public $deliveryType;
+
+    /**
+     * @Serializer\Type("float")
+     * @Serializer\SerializedName("deliveryCost")
+     * @var float
+     */
+    public $deliveryCost;
+
+    /**
+     * @Serializer\Type("string")
+     * @Serializer\SerializedName("statusName")
+     * @var string
+     */
+    public $statusName;
+
+    /**
+     * @Serializer\Type("string")
+     * @var string
+     */
+    public $status;
+
+    /**
+     * @Serializer\Type("string")
+     * @var string
+     */
+    public $created;
+
+    /**
      * @Serializer\Type("MetaShipRU\MetaShipPHPSDK\DTO\Recipient\Recipient")
      * @var Recipient
      */

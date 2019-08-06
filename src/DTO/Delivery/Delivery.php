@@ -12,8 +12,6 @@ class Delivery
 {
     /**
      * @Serializer\Type("string")
-     * @Serializer\SerializedName("name")
-     *
      * @var string
      */
     public $name;
