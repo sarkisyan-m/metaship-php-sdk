@@ -3,7 +3,7 @@
 namespace MetaShipRU\MetaShipPHPSDK\Request\Recipient;
 
 use JMS\Serializer\Annotation as Serializer;
-use MetaShipRU\MetaShipPHPSDK\DTO\Address\Address;
+use MetaShipRU\MetaShipPHPSDK\Request\Address\CreateAddressRequest;
 
 /**
  * Class CreateRecipientRequest
@@ -66,7 +66,7 @@ class CreateRecipientRequest
 
     /**
      * @Serializer\Type("MetaShipRU\MetaShipPHPSDK\Request\Address\CreateAddressRequest")
-     * @var Address
+     * @var CreateAddressRequest
      */
     public $address;
 

@@ -9,6 +9,7 @@ use MetaShipRU\MetaShipPHPSDK\Request\Documents\GetLabelRequest;
 use MetaShipRU\MetaShipPHPSDK\Request\Offer\OfferRequest;
 use MetaShipRU\MetaShipPHPSDK\Request\Order\CreateOrderRequest;
 use MetaShipRU\MetaShipPHPSDK\Request\Order\GetOrdersRequest;
+use MetaShipRU\MetaShipPHPSDK\Request\PickupPoint\GetPickupPointsRequest;
 use Psr\Http\Message\ResponseInterface;
 
 /**
@@ -97,6 +98,20 @@ class MetaShipAPIClient
             $path,
             [
                 'headers' => $this->getHeaders($getLabelRequest->getMethod(), $path),
+            ]);
+    }
+
+    public function getPickupPoints(GetPickupPointsRequest $getPickupPointsRequest): ResponseInterface
+    {
+        $params = $this->serializer->toArray($getPickupPointsRequest);
+        return $this->client->request($getPickupPointsRequest->getMethod(),
+            $getPickupPointsRequest->getPath(),
+            [
+                'query' => $params,
+                'headers' => $this->getHeaders($getPickupPointsRequest->getMethod(),
+                    $getPickupPointsRequest->getPath(),
+                    '',
+                    http_build_query($params))
             ]);
     }
 
