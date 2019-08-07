@@ -15,7 +15,7 @@ class OrdersResponse
     /**
      * @Serializer\Inline
      * @Serializer\Type("array<MetaShipRU\MetaShipPHPSDK\DTO\Order\Order>")
-     * @var Order
+     * @var Order[]
      */
     public $orders;
 }
