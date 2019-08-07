@@ -5,6 +5,7 @@ namespace MetaShipRU\MetaShipPHPSDK;
 use GuzzleHttp\Client;
 use JMS\Serializer\Serializer;
 use JMS\Serializer\SerializerBuilder;
+use MetaShipRU\MetaShipPHPSDK\Request\Documents\GetAcceptanceRequest;
 use MetaShipRU\MetaShipPHPSDK\Request\Documents\GetLabelRequest;
 use MetaShipRU\MetaShipPHPSDK\Request\Offer\OfferRequest;
 use MetaShipRU\MetaShipPHPSDK\Request\Order\CreateOrderRequest;
@@ -123,6 +124,16 @@ class MetaShipAPIClient
             [
                 'body' => $body,
                 'headers' => $this->getHeaders($createParcelRequest->getMethod(), $createParcelRequest->getPath(), $body)
+            ]);
+    }
+
+    public function getAcceptance(GetAcceptanceRequest $getAcceptanceRequest): ResponseInterface
+    {
+        $path = $getAcceptanceRequest->getPath() . '/' . $getAcceptanceRequest->id . '/acceptance';
+        return $this->client->request($getAcceptanceRequest->getMethod(),
+            $path,
+            [
+                'headers' => $this->getHeaders($getAcceptanceRequest->getMethod(), $path),
             ]);
     }
 

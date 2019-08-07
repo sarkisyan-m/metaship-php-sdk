@@ -3,18 +3,19 @@
 namespace MetaShipRU\MetaShipPHPSDK\Component\ResponseFormatter;
 
 use JMS\Serializer\SerializerBuilder;
+use MetaShipRU\MetaShipPHPSDK\Response\Documents\AcceptanceResponse;
 use MetaShipRU\MetaShipPHPSDK\Response\Documents\LabelResponse;
 use Psr\Http\Message\ResponseInterface;
 
 /**
- * Class LabelResponseFormatter
+ * Class AcceptanceResponseFormatter
  * @package MetaShipRU\MetaShipPHPSDK\Component\ResponseFormatter
  */
-class LabelResponseFormatter
+class AcceptanceResponseFormatter
 {
-    public static function format(ResponseInterface $labelResponse): LabelResponse
+    public static function format(ResponseInterface $acceptanceResponse): AcceptanceResponse
     {
         $serializer = SerializerBuilder::create()->build();
-        return $serializer->deserialize($labelResponse->getBody()->getContents(), LabelResponse::class, 'json');
+        return $serializer->deserialize($acceptanceResponse->getBody()->getContents(), AcceptanceResponse::class, 'json');
     }
 }
