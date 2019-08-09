@@ -15,5 +15,4 @@ class PickupPointsResponseFormatter
         $serializer = SerializerBuilder::create()->build();
         return $serializer->deserialize($orderResponse->getBody()->getContents(), PickupPointsResponse::class, 'json');
     }
-
 }

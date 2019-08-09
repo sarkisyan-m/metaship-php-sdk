@@ -9,9 +9,12 @@ use MetaShipRU\MetaShipPHPSDK\Request\Documents\GetAcceptanceRequest;
 use MetaShipRU\MetaShipPHPSDK\Request\Documents\GetLabelRequest;
 use MetaShipRU\MetaShipPHPSDK\Request\Offer\OfferRequest;
 use MetaShipRU\MetaShipPHPSDK\Request\Order\CreateOrderRequest;
+use MetaShipRU\MetaShipPHPSDK\Request\Order\DeleteOrderRequest;
 use MetaShipRU\MetaShipPHPSDK\Request\Order\GetOrdersRequest;
+use MetaShipRU\MetaShipPHPSDK\Request\Order\UpdateOrderRequest;
 use MetaShipRU\MetaShipPHPSDK\Request\Parcel\CreateParcelRequest;
 use MetaShipRU\MetaShipPHPSDK\Request\PickupPoint\GetPickupPointsRequest;
+use MetaShipRU\MetaShipPHPSDK\Request\Status\GetStatusesRequest;
 use Psr\Http\Message\ResponseInterface;
 
 /**
@@ -123,7 +126,9 @@ class MetaShipAPIClient
         return $this->client->post($createParcelRequest->getPath(),
             [
                 'body' => $body,
-                'headers' => $this->getHeaders($createParcelRequest->getMethod(), $createParcelRequest->getPath(), $body)
+                'headers' => $this->getHeaders($createParcelRequest->getMethod(),
+                    $createParcelRequest->getPath(),
+                    $body)
             ]);
     }
 
@@ -134,6 +139,36 @@ class MetaShipAPIClient
             $path,
             [
                 'headers' => $this->getHeaders($getAcceptanceRequest->getMethod(), $path),
+            ]);
+    }
+
+    public function updateOrder(UpdateOrderRequest $updateOrderRequest): ResponseInterface
+    {
+        $body = $this->serializer->serialize($updateOrderRequest, 'json');
+        $path = $updateOrderRequest->getPath() . '/' . $updateOrderRequest->id;
+        return $this->client->put($path,
+            [
+                'body' => $body,
+                'headers' => $this->getHeaders($updateOrderRequest->getMethod(), $path, $body)
+            ]);
+    }
+
+    public function deleteOrder(DeleteOrderRequest $deleteOrderRequest): ResponseInterface
+    {
+        $path = $deleteOrderRequest->getPath() . '/' . $deleteOrderRequest->id;
+        return $this->client->delete($path,
+            [
+                'headers' => $this->getHeaders($deleteOrderRequest->getMethod(), $path)
+            ]);
+    }
+
+    public function getStatuses(GetStatusesRequest $getStatusesRequest): ResponseInterface
+    {
+        $path = $getStatusesRequest->getPath() . '/' . $getStatusesRequest->id . '/statuses';
+        return $this->client->request($getStatusesRequest->getMethod(),
+            $path,
+            [
+                'headers' => $this->getHeaders($getStatusesRequest->getMethod(), $path),
             ]);
     }
 
