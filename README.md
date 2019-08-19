@@ -38,11 +38,17 @@ $offersRequest->width = 10;
 $offersRequest->deliveryType = 'courier';
 
 try {
-    $response = $client->getOffers($offersRequest);
-    $offerResponse = OfferResponseFormatter::format($response);
-} catch (BadResponseException $exception) {
-    $errorResponse = ErrorResponseFormatter::format($exception->getResponse());
-}
+        $response = $client->getOffers($offersRequest); 
+        $offerResponse = ResponseFormatter::format(
+           $response, 
+          'array<MetaShipRU\MetaShipPHPSDK\DTO\Offer\Offer>'
+        );
+    } catch (BadResponseException $exception) {
+        $offerResponse = ResponseFormatter::format(
+            $exception->getResponse(), 
+            'array<MetaShipRU\MetaShipPHPSDK\DTO\Error\Error>'
+        );
+    }
 
 ```
 
@@ -102,10 +108,56 @@ $createItemRequest->vendorCode = 'W234HH-12';
 $createOrderRequest->items = [$createItemRequest];
 
 try {
-    $response = $client->createOrder($createOrderRequest);
-    $orderResponse = OrderResponseFormatter::format($response);
+     $response = $client->createOrder($createOrderRequest);
+     $orderResponse = ResponseFormatter::format(
+        $response,
+        'MetaShipRU\MetaShipPHPSDK\DTO\Order\Order'
+     );
 } catch (BadResponseException $exception) {
-    $errorResponse = ErrorResponseFormatter::format($exception->getResponse());
+     $orderResponse = ResponseFormatter::format(
+        $exception->getResponse(), 
+        ErrorResponse::class
+     );
 }
 
+```
+### Получение заказов
+```php
+  $response = $client->getOrders($ordersRequest);
+            $ordersResponse = ResponseFormatter::format($response, 'array<MetaShipRU\MetaShipPHPSDK\DTO\Order\Order>');
+```
+### Получение ПВЗ
+```php
+ $getPickupPointsRequest = new GetPickupPointsRequest();
+ $getPickupPointsRequest->kladrId = 7700000000000;
+ try {
+        $response = $client->getPickupPoints($getPickupPointsRequest);
+        $orderResponse = ResponseFormatter::format(
+           $response, 
+           'array<MetaShipRU\MetaShipPHPSDK\DTO\PickupPoint\PickupPoint>'
+        );
+    } catch (BadResponseException $exception) {
+        $orderResponse = ResponseFormatter::format(
+            $exception->getResponse(),
+            ErrorResponse::class
+        );
+    }
+```
+
+### Создание партии
+```php
+ $createParcelRequest = new CreateParcelRequest();
+ $createParcelRequest->orderNumbers = [12376];
+ try {
+        $response = $client->createParcel($createParcelRequest);
+        $parcelResponse = ResponseFormatter::format(
+            $response, 
+            ParcelsResponse::class
+        );
+    } catch (BadResponseException $exception) {
+        $parcelResponse = ResponseFormatter::format(
+            $exception->getResponse(), 
+            ErrorResponse::class
+        );
+    }
 ```
