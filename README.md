@@ -120,7 +120,10 @@ try {
 ### Получение заказов
 ```php
   $response = $client->getOrders($ordersRequest);
-            $ordersResponse = ResponseFormatter::format($response, 'array<MetaShipRU\MetaShipPHPSDK\DTO\Order\Order>');
+  $ordersResponse = ResponseFormatter::format(
+    $response, 
+    'array<MetaShipRU\MetaShipPHPSDK\DTO\Order\Order>'
+  );
 ```
 ### Получение ПВЗ
 ```php
