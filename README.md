@@ -3,6 +3,9 @@
 ## Установка
 
 > Минимальные требования — PHP 7.1+.
+```bash
+composer require apetchenko/metaship-php-sdk:0.0.5
+```
 
 ### Использование
 
