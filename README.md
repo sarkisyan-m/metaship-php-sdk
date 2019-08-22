@@ -2,7 +2,7 @@
 
 ## Установка
 
-> Минимальные требования — PHP 7.2+.
+> Минимальные требования — PHP 7.1+.
 
 ```bash
 composer require metaship-ru/metaship-php-sdk
