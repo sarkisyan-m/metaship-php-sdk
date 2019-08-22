@@ -90,6 +90,7 @@ $createAddressRequest->housing = '3';
 $createAddressRequest->apartment = 'кв 14';
 
 $createRecipientRequest->address = $createAddressRequest;
+
 $createOrderRequest->recipient = $createRecipientRequest;
 
 $createItemRequest = new CreateItemRequest();
