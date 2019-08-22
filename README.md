@@ -1,4 +1,4 @@
-# MetaShipPHPSDK
+# MetaShipPHPSDK для PHP 7.1
 
 ## Установка
 
