@@ -5,6 +5,8 @@ namespace MetaShipRU\MetaShipPHPSDK;
 use GuzzleHttp\Client;
 use JMS\Serializer\Serializer;
 use JMS\Serializer\SerializerBuilder;
+use MetaShipRU\MetaShipPHPSDK\Request\City\CityAutoCompleteRequest;
+use MetaShipRU\MetaShipPHPSDK\Request\City\CityRequest;
 use MetaShipRU\MetaShipPHPSDK\Request\Documents\GetAcceptanceRequest;
 use MetaShipRU\MetaShipPHPSDK\Request\Documents\GetLabelRequest;
 use MetaShipRU\MetaShipPHPSDK\Request\Offer\OfferRequest;
@@ -72,6 +74,34 @@ class MetaShipAPIClient
                 'query' => $params,
                 'headers' => $this->getHeaders($offerRequest->getMethod(),
                     $offerRequest->getPath(),
+                    '',
+                    http_build_query($params))
+            ]);
+    }
+
+    public function getCities(CityRequest $request): ResponseInterface
+    {
+        $params = $this->serializer->toArray($request);
+        return $this->client->request($request->getMethod(),
+            $request->getPath(),
+            [
+                'query' => $params,
+                'headers' => $this->getHeaders($request->getMethod(),
+                    $request->getPath(),
+                    '',
+                    http_build_query($params))
+            ]);
+    }
+
+    public function getCitiesAutoComplete(CityAutoCompleteRequest $request): ResponseInterface
+    {
+        $params = $this->serializer->toArray($request);
+        return $this->client->request($request->getMethod(),
+            $request->getPath(),
+            [
+                'query' => $params,
+                'headers' => $this->getHeaders($request->getMethod(),
+                    $request->getPath(),
                     '',
                     http_build_query($params))
             ]);
