@@ -15,4 +15,9 @@ class CityRequest implements IRequest
 
     const METHOD = 'GET';
     const PATH = '/v1/cities';
+
+    /**
+     * @var string
+     */
+    public $start;
 }
