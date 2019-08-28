@@ -1,10 +1,10 @@
-# MetaShipPHPSDK для PHP 7.1
+# MetaShipPHPSDK
 
 ## Установка
 
 > Минимальные требования — PHP 7.1+.
 ```bash
-composer require apetchenko/metaship-php-sdk:0.0.5
+composer require sarkisyan-m/metaship-php-sdk:0.0.8
 ```
 
 ### Использование
@@ -22,8 +22,8 @@ $client = new MetaShipAPIClient('URL','api-key', 'api-secet');
 ```php
 use MetaShipRU\MetaShipPHPSDK\Request\Offer\OfferRequest;
 use GuzzleHttp\Exception\BadResponseException;
-use MetaShipRU\MetaShipPHPSDK\Component\ResponseFormatter\ErrorResponseFormatter;
-use MetaShipRU\MetaShipPHPSDK\Component\ResponseFormatter\OfferResponseFormatter;
+use MetaShipRU\MetaShipPHPSDK\Component\ResponseFormatter\ResponseFormatter;
+use MetaShipRU\MetaShipPHPSDK\Component\ResponseFormatter\ErrorFormatter;
 use MetaShipRU\MetaShipPHPSDK\MetaShipAPIClient;
 
 $offersRequest = new OfferRequest();
@@ -37,17 +37,11 @@ $offersRequest->width = 10;
 $offersRequest->deliveryType = 'courier';
 
 try {
-        $response = $client->getOffers($offersRequest); 
-        $offerResponse = ResponseFormatter::format(
-           $response, 
-          'array<MetaShipRU\MetaShipPHPSDK\DTO\Offer\Offer>'
-        );
-    } catch (BadResponseException $exception) {
-        $offerResponse = ResponseFormatter::format(
-            $exception->getResponse(), 
-            'array<MetaShipRU\MetaShipPHPSDK\DTO\Error\Error>'
-        );
-    }
+    $response = $client->getOffers($offersRequest);
+    $offerResponse = ResponseFormatter::format($response, 'array<MetaShipRU\MetaShipPHPSDK\DTO\Offer\Offer>');
+} catch (BadResponseException $exception) {
+    $offerResponse = ErrorFormatter::format($exception->getResponse(), 'array<MetaShipRU\MetaShipPHPSDK\DTO\Error\Error>');
+}
 
 ```
 
@@ -55,8 +49,8 @@ try {
 
 ```php
 use GuzzleHttp\Exception\BadResponseException;
-use MetaShipRU\MetaShipPHPSDK\Component\ResponseFormatter\ErrorResponseFormatter;
-use MetaShipRU\MetaShipPHPSDK\Component\ResponseFormatter\OrderResponseFormatter;
+use MetaShipRU\MetaShipPHPSDK\Component\ResponseFormatter\ResponseFormatter;
+use MetaShipRU\MetaShipPHPSDK\Component\ResponseFormatter\ErrorFormatter;
 use MetaShipRU\MetaShipPHPSDK\MetaShipAPIClient;
 use MetaShipRU\MetaShipPHPSDK\Request\Address\CreateAddressRequest;
 use MetaShipRU\MetaShipPHPSDK\Request\Item\CreateItemRequest;
@@ -106,59 +100,51 @@ $createItemRequest->vendorCode = 'W234HH-12';
 $createOrderRequest->items = [$createItemRequest];
 
 try {
-     $response = $client->createOrder($createOrderRequest);
-     $orderResponse = ResponseFormatter::format(
-        $response,
-        'MetaShipRU\MetaShipPHPSDK\DTO\Order\Order'
-     );
+    $response = $client->createOrder($createOrderRequest);
+    $orderResponse = ResponseFormatter::format($response, 'MetaShipRU\MetaShipPHPSDK\DTO\Order\Order');
 } catch (BadResponseException $exception) {
-     $orderResponse = ResponseFormatter::format(
-        $exception->getResponse(), 
-        ErrorResponse::class
-     );
+    $orderResponse = ErrorFormatter::format($exception->getResponse(), 'array<MetaShipRU\MetaShipPHPSDK\DTO\Error\Error>');
 }
 
 ```
 ### Получение заказов
 ```php
-  $response = $client->getOrders($ordersRequest);
-  $ordersResponse = ResponseFormatter::format(
-    $response, 
-    'array<MetaShipRU\MetaShipPHPSDK\DTO\Order\Order>'
-  );
+$ordersRequest = new \MetaShipRU\MetaShipPHPSDK\Request\Order\GetOrdersRequest();
+
+try {
+    $response = $client->getOrders($ordersRequest);
+    $ordersResponse = ResponseFormatter::format($response, 'array<MetaShipRU\MetaShipPHPSDK\DTO\Order\Order>');
+} catch (BadResponseException $exception) {
+    $orderResponse = ErrorFormatter::format($exception->getResponse(), 'array<MetaShipRU\MetaShipPHPSDK\DTO\Error\Error>');
+}
 ```
 ### Получение ПВЗ
 ```php
- $getPickupPointsRequest = new GetPickupPointsRequest();
- $getPickupPointsRequest->kladrId = 7700000000000;
- try {
-        $response = $client->getPickupPoints($getPickupPointsRequest);
-        $orderResponse = ResponseFormatter::format(
-           $response, 
-           'array<MetaShipRU\MetaShipPHPSDK\DTO\PickupPoint\PickupPoint>'
-        );
-    } catch (BadResponseException $exception) {
-        $orderResponse = ResponseFormatter::format(
-            $exception->getResponse(),
-            ErrorResponse::class
-        );
-    }
+$getPickupPointsRequest = new GetPickupPointsRequest();
+$getPickupPointsRequest->kladrId = 7700000000000;
+
+try {
+    $response = $client->getPickupPoints($getPickupPointsRequest);
+    $orderResponse = ResponseFormatter::format($response, 'array<MetaShipRU\MetaShipPHPSDK\DTO\PickupPoint\PickupPoint>');
+} catch (BadResponseException $exception) {
+    $orderResponse = ErrorFormatter::format($exception->getResponse(), 'array<MetaShipRU\MetaShipPHPSDK\DTO\Error\Error>');
+}
 ```
 
 ### Создание партии
 ```php
- $createParcelRequest = new CreateParcelRequest();
- $createParcelRequest->orderNumbers = [12376];
- try {
-        $response = $client->createParcel($createParcelRequest);
-        $parcelResponse = ResponseFormatter::format(
-            $response, 
-            ParcelsResponse::class
-        );
-    } catch (BadResponseException $exception) {
-        $parcelResponse = ResponseFormatter::format(
-            $exception->getResponse(), 
-            ErrorResponse::class
-        );
-    }
+$createParcelRequest = new CreateParcelRequest();
+$createParcelRequest->orderNumbers = [12376];
+try {
+    $response = $client->createParcel($createParcelRequest);
+    $parcelResponse = ResponseFormatter::format(
+        $response,
+        ParcelsResponse::class
+    );
+} catch (BadResponseException $exception) {
+    $parcelResponse = ResponseFormatter::format(
+        $exception->getResponse(),
+        ErrorResponse::class
+    );
+}
 ```
