@@ -3,6 +3,7 @@
 namespace MetaShipRU\MetaShipPHPSDK\Request\Order;
 
 use JMS\Serializer\Annotation as Serializer;
+use MetaShipRU\MetaShipPHPSDK\DTO\Place\Place;
 use MetaShipRU\MetaShipPHPSDK\Request\IRequest;
 use MetaShipRU\MetaShipPHPSDK\Request\Item\CreateItemRequest;
 use MetaShipRU\MetaShipPHPSDK\Request\Recipient\CreateRecipientRequest;
@@ -19,11 +20,51 @@ class CreateOrderRequest implements IRequest
     const METHOD = 'POST';
     const PATH = '/v1/orders';
 
+    /** @var string Вскрытие заказа */
+    const SERVICE_OPEN = 'open';
+    /** @var string Дополнительный звонок клиенту */
+    const SERVICE_CALL = 'call';
+    /** @var string Возврат документов по заказу */
+    const SERVICE_RETURN_DOCS = 'return_docs';
+    /** @var string Частичный выкуп */
+    const SERVICE_PARTIAL_BUY = 'partial_buy';
+    /** @var string Примерка */
+    const SERVICE_DRESS_FITTING = 'dress_fitting';
+    /** @var string Подъем груза */
+    const SERVICE_LIFTING = 'lifting';
+    /** @var string Обмен товара на другой */
+    const SERVICE_CHANGE = 'change';
+    /** @var string SMS информирование */
+    const SERVICE_SMS = 'sms';
+    /** @var string Возврату не подлежит */
+    const SERVICE_NO_RETURN = 'no_return';
+
     /**
      * @Serializer\Type("integer")
      * @var int
      */
     public $length;
+
+    /**
+     * @Serializer\SerializedName("shopId")
+     * @Serializer\Type("integer")
+     * @var int
+     */
+    public $shopId;
+
+    /**
+     * @Serializer\Type("integer")
+     * @Serializer\SerializedName("warehouseId")
+     * @var int
+     */
+    public $warehouseId;
+
+    /**
+     * @Serializer\Type("string")
+     * @Serializer\SerializedName("fulfillmentServiceNumber")
+     * @var string
+     */
+    public $fulfillmentServiceNumber;
 
     /**
      * @Serializer\Type("integer")
@@ -52,10 +93,23 @@ class CreateOrderRequest implements IRequest
 
     /**
      * @Serializer\Type("string")
+     * @var string
+     */
+    public $status;
+
+    /**
+     * @Serializer\Type("string")
      * @Serializer\SerializedName("shopServiceCode")
      * @var string
      */
     public $shopServiceCode;
+
+    /**
+     * @Serializer\Type("string")
+     * @Serializer\SerializedName("warehouseServiceCode")
+     * @var string
+     */
+    public $warehouseServiceCode;
 
     /**
      * @Serializer\Type("float")
@@ -72,6 +126,13 @@ class CreateOrderRequest implements IRequest
     public $paymentSum;
 
     /**
+     * @Serializer\Type("integer")
+     * @Serializer\SerializedName("paymentMethod")
+     * @var int
+     */
+    public $paymentMethod;
+
+    /**
      * @Serializer\Type("string")
      * @Serializer\SerializedName("shopNumber")
      * @var string
@@ -84,6 +145,27 @@ class CreateOrderRequest implements IRequest
      * @var string
      */
     public $deliveryType;
+
+    /**
+     * @Serializer\Type("string")
+     * @Serializer\SerializedName("desiredDeliveryDate")
+     * @var string
+     */
+    public $desiredDeliveryDate;
+
+    /**
+     * @Serializer\Type("string")
+     * @Serializer\SerializedName("timeFrom")
+     * @var string
+     */
+    public $timeFrom;
+
+    /**
+     * @Serializer\Type("string")
+     * @Serializer\SerializedName("timeTo")
+     * @var string
+     */
+    public $timeTo;
 
     /**
      * @Serializer\Type("float")
@@ -102,9 +184,23 @@ class CreateOrderRequest implements IRequest
     /**
      * @Serializer\Type("string")
      * @Serializer\SerializedName("tariffId")
-     * @var float
+     * @var string
      */
     public $tariffId;
+
+    /**
+     * @Serializer\Type("string")
+     * @Serializer\SerializedName("shipmentDate")
+     * @var string
+     */
+    public $shipmentDate;
+
+    /**
+     * @Serializer\Type("array<string>")
+     *
+     * @var array
+     */
+    public $services;
 
     /**
      * @Serializer\Type("MetaShipRU\MetaShipPHPSDK\Request\Recipient\CreateRecipientRequest")
@@ -117,4 +213,17 @@ class CreateOrderRequest implements IRequest
      * @var CreateItemRequest[]
      */
     public $items;
+
+    /**
+     * @Serializer\Type("array<MetaShipRU\MetaShipPHPSDK\DTO\Place\Place>")
+     * @var Place[]
+     */
+    public $places;
+
+    /**
+     * @Serializer\SerializedName("created")
+     * @Serializer\Type("string")
+     * @var string
+     */
+    public $created;
 }
