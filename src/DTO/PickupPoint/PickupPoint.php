@@ -82,6 +82,12 @@ class PickupPoint
     public $house;
 
     /**
+     * @Serializer\Type("string")
+     * @var string|null
+     */
+    public $housing;
+
+    /**
      * @Serializer\Type("integer")
      * @Serializer\SerializedName("postCode")
      * @var int
