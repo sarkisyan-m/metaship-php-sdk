@@ -138,4 +138,9 @@ class PickupPoint
      */
     public $photos;
 
+    /**
+     * @Serializer\Type("string")
+     * @var string
+     */
+    public $status;
 }
