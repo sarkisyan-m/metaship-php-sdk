@@ -4,7 +4,7 @@
 
 > Минимальные требования — PHP 7.1+.
 ```bash
-composer require sarkisyan-m/metaship-php-sdk:2.0.3
+composer require sarkisyan-m/metaship-php-sdk:2.0.4
 ```
 
 ### Использование
