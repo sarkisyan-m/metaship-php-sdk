@@ -156,4 +156,11 @@ class OfferRequest implements IRequest
      * @var string
      */
     public $deliveryType;
+
+    /**
+     * @Serializer\Type("string")
+     * @Serializer\SerializedName("fullAddressFrom")
+     * @var string
+     */
+    public $fullAddressFrom;
 }
